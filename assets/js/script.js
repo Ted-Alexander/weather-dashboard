@@ -10,8 +10,6 @@ document.getElementById("submit").addEventListener("click", function () {
 //global variables used for APIs which will be edited and executed in respective functions
 //based on user input
 var weatherAPI = "https://api.openweathermap.org/data/2.5/forecast?q=";
-var giphyAPI = "https://api.giphy.com/v1/gifs/search?q=";
-
 
 var apikey = "&units=imperial&appid=8b3443943b4b694fb99d8d775a0e3820";
 
