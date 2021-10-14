@@ -29,7 +29,7 @@
           <option value="notated-music">Notated Music</option>
           <option value="websites">Websites</option>
         </select> -->
-        <button class="btn btn-info btn-block">Search</button>
+        <button class="btn btn-info btn-block" id="submit">Search</button>
       </form>
 
       <!-- <a href="./index.html" class="btn btn-block btn-danger">&larr; Go back.</a> -->
@@ -41,7 +41,18 @@
 
     <div class="col-12 col-md-9 p-3 text-light">
       <h2>Weather report for <span id="result-text"></span></h2>
-      <div id="result-content"></div>
+      <div id="result-content">
+        <ul class="stats">
+          <h3>Weather:</h3>
+          <li id="cityname"> </li>
+          <li id="country"> </li>
+          <li id="intelligence"> </li>
+          <li id="power"> </li>
+          <li id="speed"> </li>
+          <li id="strength"> </li>
+          <li id="hero-stats"> </li>
+      </ul>
+      </div>
     </div>
   </div>
 

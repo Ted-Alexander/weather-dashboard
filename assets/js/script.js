@@ -1,121 +1,98 @@
-var resultTextEl = document.querySelector('#result-text');
-var resultContentEl = document.querySelector('#result-content');
-var searchFormEl = document.querySelector('#search-form');
+//executes function based on button click and text input on form
+document.getElementById("submit").addEventListener("click", function () {
+  event.preventDefault();
+  let input = document.getElementById('search-input').value
+  loadJSONFile(input);
+  addHistory();
+})
+
+
+//global variables used for APIs which will be edited and executed in respective functions
+//based on user input
+var weatherAPI = "api.openweathermap.org/data/2.5/forecast?q=";
+var giphyAPI = "https://api.giphy.com/v1/gifs/search?q=";
+
+
+var apikey = "&units=imperial&appid=8b3443943b4b694fb99d8d775a0e3820";
+
+//initial check condition to see if it is user's first search/first
+//time using program
 var firstSearch = false;
 
-function getParams() {
-  // Get the search params out of the URL (i.e. `?q=london&format=photo`) and convert it to an array (i.e. ['?q=london', 'format=photo'])
-  var searchParamsArr = document.location.search.split('&');
 
-  // Get the query and format values
-  var query = searchParamsArr[0].split('=').pop();
-  // var format = searchParamsArr[1].split('=').pop();
 
-  searchApi(query);
-}
-
-function printResults(resultObj) {
-  console.log(resultObj);
-
-  // set up `<div>` to hold result content
-  var resultCard = document.createElement('div');
-  resultCard.classList.add('card', 'bg-light', 'text-dark', 'mb-3', 'p-3');
-
-  var resultBody = document.createElement('div');
-  resultBody.classList.add('card-body');
-  resultCard.append(resultBody);
-
-  var titleEl = document.createElement('h3');
-  titleEl.textContent = resultObj.title;
-
-  var bodyContentEl = document.createElement('p');
-  bodyContentEl.innerHTML =
-    '<strong>Date:</strong> ' + resultObj.date + '<br/>';
-
-  if (resultObj.subject) {
-    bodyContentEl.innerHTML +=
-      '<strong>Subjects:</strong> ' + resultObj.subject.join(', ') + '<br/>';
-  } else {
-    bodyContentEl.innerHTML +=
-      '<strong>Subjects:</strong> No subject for this entry.';
-  }
-
-  if (resultObj.description) {
-    bodyContentEl.innerHTML +=
-      '<strong>Description:</strong> ' + resultObj.description[0];
-  } else {
-    bodyContentEl.innerHTML +=
-      '<strong>Description:</strong>  No description for this entry.';
-  }
-
-  var linkButtonEl = document.createElement('a');
-  linkButtonEl.textContent = 'Read More';
-  linkButtonEl.setAttribute('href', resultObj.url);
-  linkButtonEl.classList.add('btn', 'btn-dark');
-
-  resultBody.append(titleEl, bodyContentEl, linkButtonEl);
-
-  resultContentEl.append(resultCard);
-}
-
-function searchApi(query, format) {
-  var locQueryUrl = 'https://www.loc.gov/search/?fo=json';
-
-  if (format) {
-    locQueryUrl = 'https://www.loc.gov/' + format + '/?fo=json';
-  }
-
-  locQueryUrl = locQueryUrl + '&q=' + query;
-
-  fetch(locQueryUrl)
+// loads the JSON data from OpenWeather API
+function loadJSONFile(input) {
+  console.log(input)
+  console.log("step 1 done.")
+  //combines set variable with the input to create the url used for the search
+  var searchURL = weatherAPI + input + apikey;
+  console.log(searchURL);
+  fetch(searchURL)
     .then(function (response) {
-      if (!response.ok) {
-        throw response.json();
-      }
-
       return response.json();
     })
-    .then(function (locRes) {
-      // write query to page so user knows what they are viewing
-      resultTextEl.textContent = locRes.search.query;
+  //fills in the data fields using the given parameters
+    .then(function (data) {
+      console.log(data);
+      console.log(data.results[0].name);
+      console.log(data.results[0].id);
+      document.getElementById("cityname").innerHTML = data.city.name;
+      document.getElementById("country").innerHTML = "Country:  " + data.city.country;
+      document.getElementById("temp").innerHTML = "Current Temp:  " + data.list.main.temp;
+      // console.log(data.results[0].image.url);
+      // document.getElementById("thumbnailpic").setAttribute("src", data.results[0].image.url);
+      // console.log(data.results[0].biography);
+      // document.getElementById("race").innerHTML = data.results[0].appearance.race;
+      // document.getElementById("height").innerHTML = "Height:  " + data.results[0].appearance.height[0];
+      // document.getElementById("weight").innerHTML = "Weight:  " + data.results[0].appearance.weight[0];
+      // document.getElementById("job").innerHTML = "Occupation:  " + data.results[0].work.occupation;
+      // console.log(data.results[0].powerstats);
+      // document.getElementById("combat").innerHTML = "Combat:" + data.results[0].powerstats.combat;
+      // document.getElementById("durability").innerHTML = "Durability:  " + data.results[0].powerstats.durability;
+      // document.getElementById("intelligence").innerHTML = "Intelligence:  " + data.results[0].powerstats.intelligence;
+      // document.getElementById("power").innerHTML = "Power:  " + data.results[0].powerstats.power;
+      // document.getElementById("speed").innerHTML = "Speed:  " + data.results[0].powerstats.speed;
+      // document.getElementById("strength").innerHTML = "Strength:  " + data.results[0].powerstats.strength;
+      // document.getElementById("first").innerHTML = data.results[0].biography["first-appearance"];
 
-      console.log(locRes);
+      //calls loadGifs using hero name from fetched data
+      // loadGifs(data.results[0].name)
 
-      if (!locRes.results.length) {
-        console.log('No results found!');
-        resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
-      } else {
-        resultContentEl.textContent = '';
-        for (var i = 0; i < locRes.results.length; i++) {
-          printResults(locRes.results[i]);
-        }
-      }
+
     })
-    .catch(function (error) {
-      console.error(error);
-    });
-}
 
-function handleSearchFormSubmit(event) {
-  event.preventDefault();
+};
 
-  var searchInputVal = document.querySelector('#search-input').value;
-  // var formatInputVal = document.querySelector('#format-input').value;
+//loads gifs based on user input into function
+// function loadGifs(input) {
 
-  if (!searchInputVal) {
-    console.error('You need a search input value!');
-    return;
-  }
+  //concatanates giphy URL to be fetched  
+//   var searchURL2 = giphyAPI + input + apikey;
+//   console.log(searchURL2);
 
-  searchApi(searchInputVal);
-}
+//   //fetch call
+//   fetch(searchURL2)
+//     .then(function (response) {
 
-searchFormEl.addEventListener('submit', handleSearchFormSubmit);
+//       //returns response of API fetch in object form after fetch
+//       return response.json();
+//     })
 
-getParams();
+//     //once json response is returned then specific URLs are added to the sources of
+//     // html img elements gif1-3 in order for gifs to appear on page
+//     .then(function (data) {
+//       console.log(data);
+//       document.getElementById("gif1").setAttribute("src", data.data[0].images.original.url);
+//       document.getElementById("gif2").setAttribute("src", data.data[1].images.original.url);
+//       document.getElementById("gif3").setAttribute("src", data.data[2].images.original.url);
+//     })
+// }
+
+console.log("step 3 done.");
 
 //used to select form input
-var searchItem = document.querySelector('#search-input');
+var searchItem = document.querySelector('#searchInput');
 
 //used to select container to hold searchItems
 var searchList = document.querySelector('#search-list');
@@ -176,7 +153,7 @@ function displayHistory() {
   //automatically loads user's last search
   if (!firstSearch) {
     firstSearch = true
-    searchApi(saved[saved.length - 1])
+    loadJSONFile(saved[saved.length - 1])
   }
 
   //adds buttons for each search item onto html 
@@ -194,4 +171,3 @@ function displayHistory() {
 
 
 displayHistory()
-
