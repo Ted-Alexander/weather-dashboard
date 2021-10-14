@@ -9,7 +9,7 @@ document.getElementById("submit").addEventListener("click", function () {
 
 //global variables used for APIs which will be edited and executed in respective functions
 //based on user input
-var weatherAPI = "api.openweathermap.org/data/2.5/forecast?q=";
+var weatherAPI = "https://api.openweathermap.org/data/2.5/forecast?q=";
 var giphyAPI = "https://api.giphy.com/v1/gifs/search?q=";
 
 
@@ -35,11 +35,11 @@ function loadJSONFile(input) {
   //fills in the data fields using the given parameters
     .then(function (data) {
       console.log(data);
-      console.log(data.results[0].name);
-      console.log(data.results[0].id);
+      // console.log(data.results[0].name);
+      // console.log(data.results[0].id);
       document.getElementById("cityname").innerHTML = data.city.name;
       document.getElementById("country").innerHTML = "Country:  " + data.city.country;
-      document.getElementById("temp").innerHTML = "Current Temp:  " + data.list.main.temp;
+      document.getElementById("temperature").innerHTML = "Current Temp:  " + data.list[0].main.temp;
       // console.log(data.results[0].image.url);
       // document.getElementById("thumbnailpic").setAttribute("src", data.results[0].image.url);
       // console.log(data.results[0].biography);
@@ -92,7 +92,7 @@ function loadJSONFile(input) {
 console.log("step 3 done.");
 
 //used to select form input
-var searchItem = document.querySelector('#searchInput');
+var searchItem = document.querySelector('#search-input');
 
 //used to select container to hold searchItems
 var searchList = document.querySelector('#search-list');
