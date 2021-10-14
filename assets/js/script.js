@@ -37,6 +37,10 @@ function loadJSONFile(input) {
       document.getElementById("cityname").innerHTML = data.city.name;
       document.getElementById("country").innerHTML = "Country:  " + data.city.country;
       document.getElementById("temperature").innerHTML = "Current Temp:  " + data.list[0].main.temp;
+      document.getElementById("weather").innerHTML = "Current Weather:  " + data.list[0].weather.description;
+      document.getElementById("feels-like").innerHTML = "Feels like:  " + data.list[0].main.feels_like;
+      document.getElementById("humidity").innerHTML = "Humidity:  " + data.list[0].main.humidity;
+      document.getElementById("windspeed").innerHTML = "Wind Speed::  " + data.list[0].wind.speed;
       
 
       
