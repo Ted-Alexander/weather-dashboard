@@ -35,59 +35,19 @@ function loadJSONFile(input) {
   //fills in the data fields using the given parameters
     .then(function (data) {
       console.log(data);
-      // console.log(data.results[0].name);
-      // console.log(data.results[0].id);
+      
       document.getElementById("cityname").innerHTML = data.city.name;
       document.getElementById("country").innerHTML = "Country:  " + data.city.country;
       document.getElementById("temperature").innerHTML = "Current Temp:  " + data.list[0].main.temp;
-      // console.log(data.results[0].image.url);
-      // document.getElementById("thumbnailpic").setAttribute("src", data.results[0].image.url);
-      // console.log(data.results[0].biography);
-      // document.getElementById("race").innerHTML = data.results[0].appearance.race;
-      // document.getElementById("height").innerHTML = "Height:  " + data.results[0].appearance.height[0];
-      // document.getElementById("weight").innerHTML = "Weight:  " + data.results[0].appearance.weight[0];
-      // document.getElementById("job").innerHTML = "Occupation:  " + data.results[0].work.occupation;
-      // console.log(data.results[0].powerstats);
-      // document.getElementById("combat").innerHTML = "Combat:" + data.results[0].powerstats.combat;
-      // document.getElementById("durability").innerHTML = "Durability:  " + data.results[0].powerstats.durability;
-      // document.getElementById("intelligence").innerHTML = "Intelligence:  " + data.results[0].powerstats.intelligence;
-      // document.getElementById("power").innerHTML = "Power:  " + data.results[0].powerstats.power;
-      // document.getElementById("speed").innerHTML = "Speed:  " + data.results[0].powerstats.speed;
-      // document.getElementById("strength").innerHTML = "Strength:  " + data.results[0].powerstats.strength;
-      // document.getElementById("first").innerHTML = data.results[0].biography["first-appearance"];
+      
 
-      //calls loadGifs using hero name from fetched data
-      // loadGifs(data.results[0].name)
-
+      
 
     })
 
 };
 
-//loads gifs based on user input into function
-// function loadGifs(input) {
 
-  //concatanates giphy URL to be fetched  
-//   var searchURL2 = giphyAPI + input + apikey;
-//   console.log(searchURL2);
-
-//   //fetch call
-//   fetch(searchURL2)
-//     .then(function (response) {
-
-//       //returns response of API fetch in object form after fetch
-//       return response.json();
-//     })
-
-//     //once json response is returned then specific URLs are added to the sources of
-//     // html img elements gif1-3 in order for gifs to appear on page
-//     .then(function (data) {
-//       console.log(data);
-//       document.getElementById("gif1").setAttribute("src", data.data[0].images.original.url);
-//       document.getElementById("gif2").setAttribute("src", data.data[1].images.original.url);
-//       document.getElementById("gif3").setAttribute("src", data.data[2].images.original.url);
-//     })
-// }
 
 console.log("step 3 done.");
 
